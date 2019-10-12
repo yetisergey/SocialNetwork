@@ -1,24 +1,32 @@
-
 import React, { Component } from "react";
-import { WallWrapp, LeftSide, RightSide, AvatarWrapp } from "./Wall.style";
-
+import { WallWrapp, LeftSide, RightSide } from "./Wall.style";
+import ButtonSquare from "../../components/Buttons/ButtonSquare";
+import { AvatarWrapp } from "../../components/Avatar/Avatar";
+import Text from "../../components/Text";
 export default class Wall extends Component {
-    comonentDidMount() {
+  comonentDidMount() {}
 
-    }
-
-    render() {
-        return (
-            <WallWrapp>
-                <LeftSide>
-                    <AvatarWrapp />
-                    <button> Пригласить в</button>
-                    <button> Добавить в контакты</button>
-                    <button> Отправить сообщение</button>
-                </LeftSide>
-                <RightSide>
-                    <h3>Масленников Сергей Андреевич</h3>
-                </RightSide>
-            </WallWrapp>);
-    }
+  render() {
+    return (
+      <WallWrapp>
+        <LeftSide>
+          <AvatarWrapp src="https://sun9-54.userapi.com/c853628/v853628492/11decf/k3UxaHY5Vlw.jpg" />
+          <ButtonSquare onClick={() => alert("hello")}>
+            Пригласить в
+          </ButtonSquare>
+          <ButtonSquare onClick={() => alert("hello")}>
+            Добавить в контакты
+          </ButtonSquare>
+          <ButtonSquare onClick={() => alert("hello")}>
+            Отправить сообщение
+          </ButtonSquare>
+        </LeftSide>
+        <RightSide>
+          <Text>Масленников Сергей Андреевич</Text>
+          <Text>Здесь должен быть какой-то умный статус </Text>
+          <Text>Здесь должен быть какой-то умный статус </Text>
+        </RightSide>
+      </WallWrapp>
+    );
+  }
 }
