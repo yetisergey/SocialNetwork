@@ -6,7 +6,7 @@ export const WallWrapp = styled.div`
 `;
 
 export const LeftSide = styled.div`
-    width: 300px;
+    min-width: 300px;
 `;
 
 export const RightSide = styled.div`
