@@ -1,5 +1,5 @@
 import React from "react";
-import { ShowMoreButton } from "./CollapsibleText.style";
+import { ShowMoreButton, ShowMoreText } from "./CollapsibleText.style";
 
 
 interface IShowMore {
@@ -7,5 +7,6 @@ interface IShowMore {
 }
 
 export const ShowMore = (props: IShowMore) => {
-    return (<ShowMoreButton onClick={props.onClick}>ShowMore</ShowMoreButton>)
+    return (<ShowMoreButton onClick={props.onClick}>
+        <ShowMoreText>ShowMore</ShowMoreText></ShowMoreButton>)
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface IText {
-    text: string;
+    text?: string;
 }
 
 export const Text = (props: IText) => {
