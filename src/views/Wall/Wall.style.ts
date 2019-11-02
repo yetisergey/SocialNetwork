@@ -6,9 +6,11 @@ export const WallWrapp = styled.div`
 `;
 
 export const LeftSide = styled.div`
-    min-width: 300px;
+    min-width: 25%;
+    max-width: 25%;
 `;
 
 export const RightSide = styled.div`
-    
+    margin-left: 20px;
+    margin-right: 20px;
 `;
