@@ -1,23 +1,24 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/back-end/bin
+/back-end/obj
+/back-end/Web/bin
+/back-end/Web/obj
+/back-end/Chat/Chat.Web/bin
+/back-end/Chat/Chat.Web/obj
+/back-end/Chat/Chat.Services/bin
+/back-end/Chat/Chat.Services/obj
+/back-end/Chat/Chat.Domain/bin
+/back-end/Chat/Chat.Domain/obj
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.js
-
-# testing
-/coverage
-
-# production
-/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+/front-end/node_modules
+/front-end/.pnp
+/front-end/.pnp.js
+/front-end/coverage
+/front-end/build
+/front-end/.DS_Store
+/front-end/.env.local
+/front-end/.env.development.local
+/front-end/.env.test.local
+/front-end/.env.production.local
+/front-end/npm-debug.log*
+/front-end/yarn-debug.log*
+/front-end/yarn-error.log*
