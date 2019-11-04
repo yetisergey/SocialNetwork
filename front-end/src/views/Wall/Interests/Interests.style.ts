@@ -6,7 +6,6 @@ export const InterestsWrapper = styled.div`
 export const InterestsWrap = styled.div`
     display: flex;
     flex-wrap: wrap;
-    
 `
 
 export const InterestsName = styled.div`

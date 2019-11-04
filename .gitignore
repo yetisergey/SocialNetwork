@@ -8,6 +8,8 @@
 /back-end/Chat/Chat.Services/obj
 /back-end/Chat/Chat.Domain/bin
 /back-end/Chat/Chat.Domain/obj
+/back-end/Authorization/Authorization.Service/bin
+/back-end/Authorization/Authorization.Service/obj
 
 /front-end/node_modules
 /front-end/.pnp

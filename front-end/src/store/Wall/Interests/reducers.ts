@@ -8,7 +8,6 @@ import {
 } from "./types"
 
 export function interestReducer(state: IInterestsStore, action: InterestsActionTypes) {
-    console.log(action.type)
     switch (action.type) {
         case LOAD_INTERESTS_REQUEST:
             return {
@@ -26,7 +25,6 @@ export function interestReducer(state: IInterestsStore, action: InterestsActionT
                 addInputVisible: false
             };
         case ADD_INTEREST_REQUEST:
-            console.log(action)
             return {
                 ...state,
                 arrayOfInterests: state.arrayOfInterests.concat([action.payload])

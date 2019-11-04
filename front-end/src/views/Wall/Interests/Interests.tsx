@@ -35,9 +35,7 @@ class Interests extends React.Component<IInterestsProps, IInterestsState>
     }
 
     addInterest() {
-        console.log("addInterest")
         if (!this.props.addInputVisible) {
-            console.log("addInterest")
             this.props.showAddInput();
         }
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import { WallWrapp, LeftSide, RightSide } from "./Wall.style";
-import ButtonSquare from "../../components/Buttons/ButtonSquare";
+import { ButtonSquareWrapper } from "../../components/Buttons/ButtonSquare";
 import { AvatarWrapp } from "../../components/Avatar/Avatar";
 import CollapsibleText from "../../components/CollapsibleText/CollapsibleText";
 import { Label, LargeLabel, CursiveLabel } from "../../components/Label/Label";
@@ -9,6 +9,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { loadWallAction } from '../../store/Wall/actions';
 import { storeType } from "../../store";
 import Interests from "./Interests/Interests";
+import { Link } from 'react-router-dom'
 
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};
@@ -19,19 +20,21 @@ class Wall extends React.Component<Props> {
     }
 
     render() {
-        const { user, interests} = this.props;
+        const { user, interests } = this.props;
         return (
             <WallWrapp>
                 <LeftSide>
                     <AvatarWrapp src={user.avatar} />
-                    <ButtonSquare onClick={() => alert("hello")}>
-                        Отправить сообщение
-                    </ButtonSquare>
+                    <Link to="/messages">
+                        <ButtonSquareWrapper>
+                            Отправить сообщение
+                        </ButtonSquareWrapper>
+                    </Link>
                     <Interests {...interests}></Interests>
                 </LeftSide>
                 <RightSide>
                     <LargeLabel>{user.fio}</LargeLabel>
-                    <br/>
+                    <br />
                     <CursiveLabel>{user.status}</CursiveLabel>
                     <br />
                     <Label>О себе</Label>
