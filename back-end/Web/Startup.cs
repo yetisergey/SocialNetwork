@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Authorization.Service;
+using Domain;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Services;
 
-namespace socialnetwork_backend
+namespace Web
 {
     public class Startup
     {
@@ -23,7 +21,18 @@ namespace socialnetwork_backend
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "master";
+            });
+
+            services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ISocialNetworkContext, SocialNetworkContext>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

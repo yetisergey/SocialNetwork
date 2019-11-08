@@ -30,6 +30,16 @@ class Wall extends React.Component<Props> {
                             Отправить сообщение
                         </ButtonSquareWrapper>
                     </Link>
+                    <Link to="/friends">
+                        <ButtonSquareWrapper>
+                            Мои друзья
+                        </ButtonSquareWrapper>
+                    </Link>
+                    <Link to="/people">
+                        <ButtonSquareWrapper>
+                            Найти друзей
+                        </ButtonSquareWrapper>
+                    </Link>
                     <Interests {...interests}></Interests>
                 </LeftSide>
                 <RightSide>

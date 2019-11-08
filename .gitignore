@@ -10,6 +10,12 @@
 /back-end/Chat/Chat.Domain/obj
 /back-end/Authorization/Authorization.Service/bin
 /back-end/Authorization/Authorization.Service/obj
+/back-end/Authorization/Authorization.Attributes/bin
+/back-end/Authorization/Authorization.Attributes/obj
+/back-end/Domain/bin
+/back-end/Domain/obj
+/back-end/Services/bin
+/back-end/Services/obj
 
 /front-end/node_modules
 /front-end/.pnp
