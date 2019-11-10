@@ -5,6 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Services.Models.User;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -12,6 +13,7 @@
 
     public interface IUserService
     {
+        Task<List<UserModel>> GetUsersAsync(string search, int take, int skip);
         Task<UserModel> GetUserAsync(int id);
         Task<UserModel> GetUserAsync(string email, string password);
         Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel);
@@ -43,9 +45,18 @@
         {
             var passwordHash = GetGuidFromPassword(password);
             var dbUser = await _socialNetworkContext.Users
-                .FirstAsync(u => u.Email == email);
-                //&& u.Password == passwordHash);
+                .FirstAsync(u => u.Email == email && u.Password == passwordHash.ToString());
             return dbUser.MapToUserModel();
+        }
+
+        public async Task<List<UserModel>> GetUsersAsync(string search, int take, int skip)
+        {
+            var dbUsers = await _socialNetworkContext.Users
+                .Where(u => (u.FirstName + u.LastName).Contains(search))
+                                 .Skip(skip)
+                                 .Take(take)
+                                 .ToListAsync();
+            return dbUsers.Select(dbUser => dbUser.MapToUserModel()).ToList();
         }
 
         public Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)

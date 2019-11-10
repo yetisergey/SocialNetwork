@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Domain.Migrations
 {
@@ -13,7 +12,7 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -27,10 +26,10 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<Guid>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -44,7 +43,7 @@ namespace Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Status = table.Column<string>(nullable: true)
+                    Status = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

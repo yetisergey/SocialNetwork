@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Services;
     using Services.Models.User;
-    using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -29,14 +28,14 @@
         [HttpPost]
         public async Task<ActionResult> PostAsync([FromBody] LoginRequest loginRequest)
         {
-            var userModel = await _userService.GetUserAsync(loginRequest.Email, loginRequest.Password);
+            var userModel = await _userService.GetUserAsync(loginRequest.Email!, loginRequest.Password!);
 
-            var identity = GetIdentityAsync(userModel);
-            if (identity == null)
+            if (userModel == null)
             {
                 return BadRequest("Invalid username or password.");
             }
 
+            var identity = GetIdentityAsync(userModel);
             var jwt = new JwtSecurityToken(claims: identity.Claims);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             await _authorizeService.AuthorizeUserAsync(userModel.Id, encodedJwt);
@@ -50,19 +49,14 @@
 
         private ClaimsIdentity GetIdentityAsync(UserModel userModel)
         {
-            if (userModel != null)
-            {
-                var claims = new List<Claim>
+            var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, userModel.Id.ToString())
                 };
 
-                var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
+            var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
-                return claimsIdentity;
-            }
-
-            return null;
+            return claimsIdentity;
         }
     }
 }

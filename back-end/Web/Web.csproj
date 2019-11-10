@@ -1,19 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>Web</RootNamespace>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.4.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>

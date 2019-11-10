@@ -1,5 +1,14 @@
-import { LOAD_WALL_REQUEST, LOAD_WALL_SUCCESS, LOAD_WALL_FAIL } from './types'
+import { REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAIL } from './types'
 import { action } from 'typesafe-actions';
-//createAsyncAction
-export const loadWallAction = () => action(LOAD_WALL_REQUEST, LOAD_WALL_SUCCESS, LOAD_WALL_FAIL);
+import { getUserProfile } from '../../api/profile/profile-api';
+import { Dispatch } from 'redux';
 
+export const loadUserProfileAction = () => {
+    return (dispatch: Dispatch) => {
+        dispatch(action(REQUEST));
+
+        getUserProfile()
+            .then(user => dispatch(action(LOAD_USER_SUCCESS, user)),
+                error => dispatch(action(LOAD_USER_FAIL, error)));
+    };
+}

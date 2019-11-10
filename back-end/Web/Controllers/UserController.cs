@@ -3,12 +3,13 @@
     using Authorization.Attributes;
     using Microsoft.AspNetCore.Mvc;
     using Services;
+    using System.Linq;
     using System.Threading.Tasks;
-    using Web.Models.User;
+    using Web.Mappings.User;
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [RedisAuthorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -19,16 +20,19 @@
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetAsync(string search = "", int take = 50, int skip = 0)
+        {
+            var userModels = await _userService.GetUsersAsync(search, take, skip);
+            var result = userModels.Select(u => u.ToUserResponse()).ToList();
+            return Ok(result);
+        }
+
+        [HttpGet]
         public async Task<ActionResult> GetAsync(int id)
         {
             var userModel = await _userService.GetUserAsync(id);
-            return Ok(new UserResponse()
-            {
-                Id = userModel.Id,
-                Email = userModel.Email,
-                FirstName = userModel.FirstName,
-                LastName = userModel.LastName
-            });
+            var result = userModel.ToUserResponse();
+            return Ok(result);
         }
     }
 }

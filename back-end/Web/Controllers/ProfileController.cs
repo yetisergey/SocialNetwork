@@ -10,7 +10,7 @@
 
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [RedisAuthorize]
     public class ProfileController : ControllerBase
     {
         private readonly IUserService _userService;

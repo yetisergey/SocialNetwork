@@ -3,15 +3,13 @@
     using Authorization.Service;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Filters;
-    using Microsoft.Extensions.Caching.Distributed;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
-    public class AuthorizeActionFilter : IAsyncAuthorizationFilter
+    public class RedisAuthorizeActionFilter : IAsyncAuthorizationFilter
     {
         private readonly IAuthorizationRedisService _authorizationRedisService;
 
-        public AuthorizeActionFilter(IAuthorizationRedisService authorizationRedisService)
+        public RedisAuthorizeActionFilter(IAuthorizationRedisService authorizationRedisService)
         {
             _authorizationRedisService = authorizationRedisService;
         }

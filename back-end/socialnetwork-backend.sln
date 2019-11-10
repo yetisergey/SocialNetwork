@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.Service", "Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{F72C6CF9-96EF-4147-B2B3-D84E0FB92A01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{D9F5E842-88B5-4E30-BB8A-7EC07380F6E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{D9F5E842-88B5-4E30-BB8A-7EC07380F6E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Attributes", "Authorization\Authorization.Attributes\Authorization.Attributes.csproj", "{2DDB6578-FC22-4C9B-8495-CA19F001BDC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authorization.Attributes", "Authorization\Authorization.Attributes\Authorization.Attributes.csproj", "{2DDB6578-FC22-4C9B-8495-CA19F001BDC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

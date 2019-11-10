@@ -7,8 +7,8 @@ import {
 import { loadInterestsAction, showAddInputAction, addInterestAction, hideAddInputAction } from "../../../store/Wall/Interests/actions";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
-import { IInterestsStore } from "../../../store/Wall/Interests/types";
-import { SaveIcon } from "../../../icons/icons";
+import { SaveIcon } from "../../../components/Icon/icon";
+import { IInterestsStore } from "../../../models/interest/types";
 
 type IInterestsProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};

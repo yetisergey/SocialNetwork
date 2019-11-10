@@ -6,7 +6,7 @@ import CollapsibleText from "../../components/CollapsibleText/CollapsibleText";
 import { Label, LargeLabel, CursiveLabel } from "../../components/Label/Label";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { loadWallAction } from '../../store/Wall/actions';
+import { loadUserProfileAction } from '../../store/Wall/actions';
 import { storeType } from "../../store";
 import Interests from "./Interests/Interests";
 import { Link } from 'react-router-dom'
@@ -16,7 +16,8 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 class Wall extends React.Component<Props> {
     componentDidMount() {
-        this.props.loadWall();
+        const { loadUserProfile } = this.props;
+        loadUserProfile();
     }
 
     render() {
@@ -59,7 +60,7 @@ class Wall extends React.Component<Props> {
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
         {
-            loadWall: loadWallAction,
+            loadUserProfile: loadUserProfileAction
         },
         dispatch
     );

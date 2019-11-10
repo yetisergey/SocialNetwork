@@ -13,6 +13,7 @@
         DbSet<Wall> Walls { get; set; }
     }
 
+#nullable disable
     public class SocialNetworkContext : DbContext, ISocialNetworkContext
     {
         public DbSet<Friend> Friends { get; set; }

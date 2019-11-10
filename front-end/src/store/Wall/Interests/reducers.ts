@@ -1,11 +1,12 @@
 import {
-    IInterestsStore,
     LOAD_INTERESTS_REQUEST,
     InterestsActionTypes,
     SHOW_ADD_INTEREST,
     ADD_INTEREST_REQUEST,
     HIDE_ADD_INTEREST
 } from "./types"
+import { IInterestsStore } from "../../../models/interest/types";
+
 
 export function interestReducer(state: IInterestsStore, action: InterestsActionTypes) {
     switch (action.type) {
