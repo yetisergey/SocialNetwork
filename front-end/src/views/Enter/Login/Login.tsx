@@ -1,10 +1,10 @@
 import React from "react";
-import { LoginForm, Password, LoginFormButtons, LoginWrapp } from "./Login.style";
-import { ButtonSquare } from "../../../components/Buttons/ButtonSquare";
+import { LoginForm, Password, LoginFormButtons, Wrapper } from "./Login.style";
+import { ButtonSquare } from "../../../components/Button";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { loginAction } from '../../../store/Auth/actions';
-import { storeType } from "../../../store";
+import { storeType, history } from "../../../store";
 import { LoginInput } from "./Login.style";
 import { LargeLabel } from "../../../components/Label/Label";
 
@@ -25,6 +25,14 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         }
     }
 
+    componentWillReceiveProps(props: ILoginProps)
+    {
+        if (!!props.accessToken)
+        {
+            history.push('/');
+        }
+    }
+
     tryLogin() {
         const { login, password } = this.state;
         const { loginAction } = this.props;
@@ -41,7 +49,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
 
     render() {
         return (
-            <LoginWrapp>
+            <Wrapper>
                 <LoginForm>
                     <LargeLabel>Login in SocialNetwork</LargeLabel>
                     <br></br>
@@ -51,7 +59,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
                         <ButtonSquare onClick={this.tryLogin.bind(this)}>Login</ButtonSquare>
                     </LoginFormButtons>
                 </LoginForm>
-            </LoginWrapp>
+            </Wrapper>
         );
     }
 }
@@ -64,6 +72,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
         dispatch
     );
 
-const mapStateToProps = (state: storeType) => { return state.authReducer; };
+const mapStateToProps = (state: storeType) => { 
+    return state.authReducer; 
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

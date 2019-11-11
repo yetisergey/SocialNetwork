@@ -8,7 +8,7 @@ export const loginAction = (email: string, password: string) => {
         dispatch(action(REQUEST));
 
         login(email, password)
-            .then(response => dispatch(action(AUTH_SUCCESS, response)),
-                error => dispatch(action(AUTH_FAIL, error)));
+            .then(response =>  dispatch(action(AUTH_SUCCESS, response)),
+                 error => dispatch(action(AUTH_FAIL, error)));
     };
 }

@@ -11,9 +11,10 @@ import { IWallStore } from "../../models/wall/types";
 
 export const initialStateWall: IWallStore = {
     user: {
-        avatar: 'https://sun9-54.userapi.com/c853628/v853628492/11decf/k3UxaHY5Vlw.jpg',
-        fio: 'Масленников Сергей Андреевич',
-        status: 'Здесь должен быть какой-то умный статус'
+        avatar: '',
+        firstName: '',
+        lastName: '',
+        email: ''
     },
     interests: {
         addInputVisible: false,

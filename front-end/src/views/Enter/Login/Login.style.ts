@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const LoginWrapp = styled.div`
+export const Wrapper = styled.div`
     display: flex;
     position: relative;
     top: 0;
@@ -10,7 +10,6 @@ export const LoginWrapp = styled.div`
     box-sizing: border-box;
     width: 100%;
 `;
-
 
 export const LoginForm = styled.div`
     width: 100%;

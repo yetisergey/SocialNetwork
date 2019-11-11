@@ -5,15 +5,15 @@ import {
     FriendWrapp,
     Friend
 } from "./Friends.style";
-import { storeType } from "../../store";
+import { storeType, history } from "../../store";
 import { bindActionCreators, Dispatch } from "redux";
 import { loadFriendsAction } from "../../store/Friends/actions";
 import { connect } from "react-redux";
-import { ButtonSquare } from "../../components/Buttons/ButtonSquare";
-import { RouteComponentProps, Link } from 'react-router-dom'
+import { ButtonSquare } from "../../components/Button";
+import { Link } from 'react-router-dom'
 
 type IFriendsProps = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps> & RouteComponentProps<{}> & {};
+    ReturnType<typeof mapDispatchToProps> & {};
 
 class Friends extends React.Component<IFriendsProps>   {
 
@@ -22,7 +22,7 @@ class Friends extends React.Component<IFriendsProps>   {
     }
 
     render() {
-        const { arrayOfFriends, history } = this.props;
+        const { arrayOfFriends } = this.props;
         return (
             <FriendsModule>
                 <ButtonSquare onClick={history.goBack}>Назад</ButtonSquare>

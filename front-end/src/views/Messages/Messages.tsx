@@ -10,15 +10,14 @@ import {
     TextArea,
     MessagesEnd
 } from "./Messages.style";
-import { storeType } from "../../store";
+import { storeType, history } from "../../store";
 import { bindActionCreators, Dispatch } from "redux";
 import { loadMessagesAction, addMessageAction } from "../../store/Messages/actions";
 import { connect } from "react-redux";
-import { ButtonSquare } from "../../components/Buttons/ButtonSquare";
-import { RouteComponentProps } from 'react-router-dom'
+import { ButtonSquare } from "../../components/Button";
 
 type IMessagesProps = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps> & RouteComponentProps<{}> & {};
+    ReturnType<typeof mapDispatchToProps> & {};
 
 interface IMessagesState {
     messageText: string;
@@ -56,7 +55,7 @@ class Messages extends React.Component<IMessagesProps, IMessagesState>   {
     }
 
     render() {
-        const { arrayOfMessages, history } = this.props;
+        const { arrayOfMessages } = this.props;
         return (
             <MessagesModule>
                 <MessagesWrapp>

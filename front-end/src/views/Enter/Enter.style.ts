@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const EnterWrappAbsolute = styled.div`
+export const Wrapper = styled.div`
     position: absolute;
     top: 0;
     bottom: 0;

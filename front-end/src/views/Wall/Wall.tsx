@@ -1,9 +1,9 @@
 import React from "react";
 import { WallWrapp, LeftSide, RightSide } from "./Wall.style";
-import { ButtonSquareWrapper } from "../../components/Buttons/ButtonSquare";
-import { AvatarWrapp } from "../../components/Avatar/Avatar";
-import CollapsibleText from "../../components/CollapsibleText/CollapsibleText";
-import { Label, LargeLabel, CursiveLabel } from "../../components/Label/Label";
+import { ButtonSquare } from "../../components/Button";
+import AvatarWrapp from "../../components/Avatar";
+import CollapsibleText from "../../components/CollapsibleText";
+import { Label, LargeLabel } from "../../components/Label";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { loadUserProfileAction } from '../../store/Wall/actions';
@@ -27,26 +27,26 @@ class Wall extends React.Component<Props> {
                 <LeftSide>
                     <AvatarWrapp src={user.avatar} />
                     <Link to="/messages">
-                        <ButtonSquareWrapper>
+                        <ButtonSquare>
                             Отправить сообщение
-                        </ButtonSquareWrapper>
+                        </ButtonSquare>
                     </Link>
                     <Link to="/friends">
-                        <ButtonSquareWrapper>
+                        <ButtonSquare>
                             Мои друзья
-                        </ButtonSquareWrapper>
+                        </ButtonSquare>
                     </Link>
                     <Link to="/people">
-                        <ButtonSquareWrapper>
+                        <ButtonSquare>
                             Найти друзей
-                        </ButtonSquareWrapper>
+                        </ButtonSquare>
                     </Link>
                     <Interests {...interests}></Interests>
                 </LeftSide>
                 <RightSide>
-                    <LargeLabel>{user.fio}</LargeLabel>
+                    <LargeLabel>{user.lastName} {user.firstName}</LargeLabel>
                     <br />
-                    <CursiveLabel>{user.status}</CursiveLabel>
+                    {/* <CursiveLabel>{user.status}</CursiveLabel> */}
                     <br />
                     <Label>О себе</Label>
                     <br />
