@@ -59,7 +59,7 @@ class Interests extends React.Component<IInterestsProps, IInterestsState>
         const { arrayOfInterests } = this.props;
         return (
             <InterestsWrapper>
-                {arrayOfInterests && <h1>Интересы</h1>}
+                {arrayOfInterests && <h1>Interests</h1>}
                 <InterestsWrap>
                     {arrayOfInterests &&
                         arrayOfInterests.map(i => <InterestsName key={i.Id}>

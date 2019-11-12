@@ -16,5 +16,6 @@
         public bool IsDeleted { get; set; }
 
         public List<Friend> Friends { get; set; } = new List<Friend>();
+        public List<Interest> Interests { get; set; } = new List<Interest>();
     }
 }

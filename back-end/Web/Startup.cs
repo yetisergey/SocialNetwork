@@ -41,6 +41,7 @@
 
             services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IInterestsService, InterestsService>();
             services.AddTransient<ISocialNetworkContext, SocialNetworkContext>();
         }
 

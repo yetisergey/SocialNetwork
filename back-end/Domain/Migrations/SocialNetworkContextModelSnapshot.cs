@@ -44,7 +44,12 @@ namespace Domain.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Interests");
                 });
@@ -98,6 +103,15 @@ namespace Domain.Migrations
                 {
                     b.HasOne("Domain.Models.User", "User")
                         .WithMany("Friends")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Models.Interest", b =>
+                {
+                    b.HasOne("Domain.Models.User", "User")
+                        .WithMany("Interests")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

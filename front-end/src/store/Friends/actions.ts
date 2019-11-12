@@ -1,7 +1,16 @@
-import { LOAD_FRIENDS_REQUEST } from './types'
+import { LOAD_FRIENDS_SUCCESS, REQUEST, LOAD_FRIENDS_FAIL } from './types'
 import { action } from 'typesafe-actions';
-import { initialStateFriends } from './reducers';
-//createAsyncAction
-export const loadFriendsAction = () => action(LOAD_FRIENDS_REQUEST, initialStateFriends.arrayOfFriends);
+import { Dispatch } from 'redux';
+import { getFriends } from '../../api/friend/friend-api';
+
+export const loadFriendsAction = () => {
+    return (dispatch: Dispatch) => {
+        dispatch(action(REQUEST));
+
+        getFriends()
+            .then(response => dispatch(action(LOAD_FRIENDS_SUCCESS, response)),
+                error => dispatch(action(LOAD_FRIENDS_FAIL, error)));
+    };
+}
 
 

@@ -14,6 +14,7 @@
     public interface IUserService
     {
         Task<List<UserModel>> GetUsersAsync(string search, int take, int skip);
+        Task<List<UserModel>> GetUserFriendsAsync(int userId);
         Task<UserModel> GetUserAsync(int id);
         Task<UserModel> GetUserAsync(string email, string password);
         Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel);
@@ -47,6 +48,14 @@
             var dbUser = await _socialNetworkContext.Users
                 .FirstAsync(u => u.Email == email && u.Password == passwordHash.ToString());
             return dbUser.MapToUserModel();
+        }
+
+        public async Task<List<UserModel>> GetUserFriendsAsync(int userId)
+        {
+            var dbUsers = await _socialNetworkContext.Users.Include(u=>u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+                                 
+            return dbUsers.Friends.Select(dbUser => dbUser.User.MapToUserModel()).ToList();
         }
 
         public async Task<List<UserModel>> GetUsersAsync(string search, int take, int skip)

@@ -1,2 +1,2 @@
-import { AvatarWrapp } from "./Avatar.styled";
+import { AvatarWrapp } from "./Avatar.style";
 export default AvatarWrapp;

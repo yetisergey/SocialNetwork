@@ -7,9 +7,10 @@ import { Label, LargeLabel } from "../../components/Label";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { loadUserProfileAction } from '../../store/Wall/actions';
-import { storeType } from "../../store";
+import { storeType, history } from "../../store";
 import Interests from "./Interests/Interests";
 import { Link } from 'react-router-dom'
+import { logoutAction } from "../../store/Auth/actions";
 
 type Props = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};
@@ -20,6 +21,11 @@ class Wall extends React.Component<Props> {
         loadUserProfile();
     }
 
+    logout() {
+        this.props.logoutAction();
+        history.push('/enter');
+    }
+
     render() {
         const { user, interests } = this.props;
         return (
@@ -28,19 +34,22 @@ class Wall extends React.Component<Props> {
                     <AvatarWrapp src={user.avatar} />
                     <Link to="/messages">
                         <ButtonSquare>
-                            Отправить сообщение
+                            Messages
                         </ButtonSquare>
                     </Link>
                     <Link to="/friends">
                         <ButtonSquare>
-                            Мои друзья
+                            My friends
                         </ButtonSquare>
                     </Link>
                     <Link to="/people">
                         <ButtonSquare>
-                            Найти друзей
+                            Find friends
                         </ButtonSquare>
                     </Link>
+                    <ButtonSquare onClick={this.logout.bind(this)}>
+                        Exit
+                    </ButtonSquare>
                     <Interests {...interests}></Interests>
                 </LeftSide>
                 <RightSide>
@@ -48,7 +57,7 @@ class Wall extends React.Component<Props> {
                     <br />
                     {/* <CursiveLabel>{user.status}</CursiveLabel> */}
                     <br />
-                    <Label>О себе</Label>
+                    <Label>About</Label>
                     <br />
                     <CollapsibleText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}></CollapsibleText>
                 </RightSide>
@@ -60,7 +69,8 @@ class Wall extends React.Component<Props> {
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
         {
-            loadUserProfile: loadUserProfileAction
+            loadUserProfile: loadUserProfileAction,
+            logoutAction: logoutAction
         },
         dispatch
     );

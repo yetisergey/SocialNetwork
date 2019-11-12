@@ -2,8 +2,8 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Models;
-    using System;
     using System.Reflection;
+    using System.Threading.Tasks;
 
     public interface ISocialNetworkContext
     {
@@ -11,6 +11,7 @@
         DbSet<Interest> Interests { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Wall> Walls { get; set; }
+        Task SaveChangesAsync();
     }
 
 #nullable disable
@@ -32,6 +33,11 @@
             {
                 options.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
             });
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await base.SaveChangesAsync();
         }
     }
 }

@@ -4,9 +4,15 @@ export const REQUEST = 'REQUEST'
 export const AUTH_SUCCESS = 'AUTH_SUCCESS'
 export const AUTH_FAIL = 'AUTH_FAIL'
 
-interface IAuthActionTypes {
+interface ILoginActionTypes {
     type: typeof REQUEST | typeof AUTH_SUCCESS | typeof AUTH_FAIL
     payload: ILoginResponse
 }
 
-export type AuthActionTypes = IAuthActionTypes;
+export const LOGOUT = 'LOGOUT'
+
+interface ILogoutActionTypes {
+    type: typeof LOGOUT
+}
+
+export type AuthActionTypes = ILoginActionTypes | ILogoutActionTypes;

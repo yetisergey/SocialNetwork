@@ -1,10 +1,10 @@
 export interface IAuthStore {
     loading: boolean;
-    accessToken?: string;
-    userId?: number;
+    accessToken: string | null;
+    userId: string | null;
 }
 
 export interface ILoginResponse {
     accessToken: string;
-    userId: number;
+    userId: string;
 }

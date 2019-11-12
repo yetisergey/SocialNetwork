@@ -1,11 +1,11 @@
 ﻿namespace Web.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
     using Authorization.Attributes;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Services;
+    using System.Threading.Tasks;
+    using Web.Helpers;
     using Web.Models.User;
 
     [Route("api/[controller]")]
@@ -23,7 +23,7 @@
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
-            var userId = GetUserIdFromHeaders();
+            var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
             var userModel = await _userService.GetUserAsync(userId);
             return Ok(new UserResponse()
             {
@@ -34,14 +34,5 @@
             });
         }
 
-        private int GetUserIdFromHeaders()
-        {
-            if (HttpContext.Request.Headers.TryGetValue("X-UserId", out var userIdStr) &&
-                int.TryParse(userIdStr, out var userId))
-            {
-                return userId;
-            }
-            throw new UnauthorizedAccessException();
-        }
     }
 }
