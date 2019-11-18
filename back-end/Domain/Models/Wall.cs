@@ -1,9 +1,9 @@
-﻿namespace Domain.Models
+﻿#nullable disable
+namespace Domain.Models
 {
-    using System;
     public class Wall
     {
         public int Id { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public string Status { get; set; }
     }
 }

@@ -17,18 +17,24 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.Friend", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.Property<int>("UserFriendId")
+                        .HasColumnType("INTEGER");
 
-                    b.HasIndex("UserId");
+                    b.HasKey("UserId", "UserFriendId");
+
+                    b.HasIndex("UserFriendId");
 
                     b.ToTable("Friends");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            UserFriendId = 2
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Interest", b =>
@@ -41,7 +47,6 @@ namespace Domain.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")
@@ -61,27 +66,43 @@ namespace Domain.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "yetisergey@gmail.com",
+                            FirstName = "Sergey",
+                            IsDeleted = false,
+                            LastName = "Maslennikov",
+                            Password = "81d0869f-4c88-657d-9a2f-eaa0c55ad015"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "test@mail.com",
+                            FirstName = "Test",
+                            IsDeleted = false,
+                            LastName = "Test",
+                            Password = "81d0869f-4c88-657d-9a2f-eaa0c55ad015"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Models.Wall", b =>
@@ -91,7 +112,6 @@ namespace Domain.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -101,6 +121,12 @@ namespace Domain.Migrations
 
             modelBuilder.Entity("Domain.Models.Friend", b =>
                 {
+                    b.HasOne("Domain.Models.User", "UserFriend")
+                        .WithMany("UserFriends")
+                        .HasForeignKey("UserFriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Domain.Models.User", "User")
                         .WithMany("Friends")
                         .HasForeignKey("UserId")

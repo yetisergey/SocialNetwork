@@ -1,10 +1,10 @@
 import { REQUEST, LOAD_USER_SUCCESS } from "./types"
 import { WallActionTypes } from "./types";
 import {
-    LOAD_INTERESTS_REQUEST,
-    ADD_INTEREST_REQUEST,
     SHOW_ADD_INTEREST,
-    HIDE_ADD_INTEREST
+    HIDE_ADD_INTEREST,
+    LOAD_INTERESTS_SUCCESS,
+    ADD_INTEREST_SUCCESS
 } from "./Interests/types";
 import { interestReducer } from "./Interests/reducers";
 import { IWallStore } from "../../models/wall/types";
@@ -30,10 +30,10 @@ export function wallReducer(state: IWallStore = initialStateWall, action: WallAc
                 ...state,
                 loading: true
             };
-        case LOAD_INTERESTS_REQUEST:
+        case LOAD_INTERESTS_SUCCESS:
         case SHOW_ADD_INTEREST:
         case HIDE_ADD_INTEREST:
-        case ADD_INTEREST_REQUEST:
+        case ADD_INTEREST_SUCCESS:
             return {
                 ...state,
                 interests: interestReducer(state.interests, action)

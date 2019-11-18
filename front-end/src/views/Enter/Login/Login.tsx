@@ -1,5 +1,5 @@
 import React from "react";
-import { LoginForm, Password, LoginFormButtons, Wrapper } from "./Login.style";
+import { Password, LoginFormButtons, Wrapper } from "./Login.style";
 import { ButtonSquare } from "../../../components/Button";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
@@ -25,10 +25,8 @@ class Login extends React.Component<ILoginProps, ILoginState> {
         }
     }
 
-    componentWillReceiveProps(props: ILoginProps)
-    {
-        if (!!props.accessToken)
-        {
+    componentWillReceiveProps(props: ILoginProps) {
+        if (!!props.accessToken) {
             history.push('/');
         }
     }
@@ -50,15 +48,13 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     render() {
         return (
             <Wrapper>
-                <LoginForm>
-                    <LargeLabel>Login in SocialNetwork</LargeLabel>
-                    <br></br>
-                    <LoginInput onChange={this.handleChangeLogin.bind(this)} ></LoginInput>
-                    <Password type="password" onChange={this.handleChangePassword.bind(this)} ></Password>
-                    <LoginFormButtons>
-                        <ButtonSquare onClick={this.tryLogin.bind(this)}>Login</ButtonSquare>
-                    </LoginFormButtons>
-                </LoginForm>
+                <LargeLabel>Login in SocialNetwork</LargeLabel>
+                <br></br>
+                <LoginInput onChange={this.handleChangeLogin.bind(this)} ></LoginInput>
+                <Password type="password" onChange={this.handleChangePassword.bind(this)} ></Password>
+                <LoginFormButtons>
+                    <ButtonSquare onClick={this.tryLogin.bind(this)}>Login</ButtonSquare>
+                </LoginFormButtons>
             </Wrapper>
         );
     }
@@ -72,8 +68,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
         dispatch
     );
 
-const mapStateToProps = (state: storeType) => { 
-    return state.authReducer; 
+const mapStateToProps = (state: storeType) => {
+    return state.authReducer;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

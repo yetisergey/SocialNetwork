@@ -47,6 +47,37 @@
             });
         }
 
+        [HttpPost]
+        [Route("register")]
+        public async Task<ActionResult> RegisterAsync([FromBody] RegisterRequest registerRequest)
+        {
+            var registerUserModel = new UserRegisterModel()
+            {
+                Email = registerRequest.Email!,
+                FirstName = registerRequest.FirstName!,
+                LastName = registerRequest.LastName!,
+                Password = registerRequest.Password!
+            };
+
+            var userModel = await _userService.RegisterUser(registerUserModel);
+
+            if (userModel == null)
+            {
+                return BadRequest("Invalid username or password.");
+            }
+
+            var identity = GetIdentityAsync(userModel);
+            var jwt = new JwtSecurityToken(claims: identity.Claims);
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            await _authorizeService.AuthorizeUserAsync(userModel.Id, encodedJwt);
+
+            return Ok(new LoginResponse()
+            {
+                AccessToken = encodedJwt,
+                UserId = userModel.Id
+            });
+        }
+
         private ClaimsIdentity GetIdentityAsync(UserModel userModel)
         {
             var claims = new List<Claim>

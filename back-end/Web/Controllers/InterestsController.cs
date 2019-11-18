@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
     using Web.Helpers;
     using Web.Mappings.Interests;
+    using Web.Models.Interests;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -30,10 +31,10 @@
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] string interestName)
+        public async Task<ActionResult> Post([FromBody] InterestRequest interestRequest)
         {
             var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
-            var interest = await _interestsService.AddUserInterestAsync(userId, interestName);
+            var interest = await _interestsService.AddUserInterestAsync(userId, interestRequest.Name!);
             return Ok(interest.ToInterestResponse());
         }
 

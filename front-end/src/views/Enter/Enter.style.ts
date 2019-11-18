@@ -10,3 +10,16 @@ export const Wrapper = styled.div`
     display: flex;
     align-items: center;
 `;
+
+export const WrapperForm = styled.div`
+    display: flex;
+    position: relative;
+    top: 0;
+    left: 0;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+`;
+
+export const Form = styled.div``;

@@ -1,22 +1,36 @@
 import {
-    LOAD_INTERESTS_REQUEST,
     SHOW_ADD_INTEREST,
-    ADD_INTEREST_REQUEST,
-    HIDE_ADD_INTEREST
+    HIDE_ADD_INTEREST,
+    LOAD_INTERESTS_SUCCESS,
+    LOAD_INTERESTS_FAIL,
+    ADD_INTEREST_SUCCESS,
+    ADD_INTEREST_FAIL
 } from './types'
 
 import { action } from 'typesafe-actions';
+import { Dispatch } from 'redux';
+import { loadInterests, addInterest } from '../../../api/interest/interest-api';
+import { REQUEST } from '../types';
 
-//createAsyncAction
-export const loadInterestsAction = () => action(LOAD_INTERESTS_REQUEST, [
-    { Id: 1, Name: 'Программирование' },
-    { Id: 2, Name: 'Рисование' },
-    { Id: 3, Name: 'Машины' },
-    { Id: 4, Name: 'Велосипед' },
-    { Id: 5, Name: 'Горные лыжи' }]);
+export const loadInterestsAction = () => {
+    return (dispatch: Dispatch) => {
+        dispatch(action(REQUEST));
+        loadInterests()
+            .then(interests => dispatch(action(LOAD_INTERESTS_SUCCESS, interests)),
+                error => dispatch(action(LOAD_INTERESTS_FAIL, error)));
+    };
+}
 
 export const showAddInputAction = () => action(SHOW_ADD_INTEREST);
-export const hideAddInputAction = () => {console.log(2); return action(HIDE_ADD_INTEREST)};
 
-export const addInterestAction = (name: string) => action(ADD_INTEREST_REQUEST, { Id: 6, Name: name })
+export const hideAddInputAction = () => action(HIDE_ADD_INTEREST);
+
+export const addInterestAction = (name: string)  => {
+    return (dispatch: Dispatch) => {
+        dispatch(action(REQUEST));
+        addInterest(name)
+            .then(interest => dispatch(action(ADD_INTEREST_SUCCESS, interest)),
+                error => dispatch(action(ADD_INTEREST_FAIL, error)));
+    };
+}
 

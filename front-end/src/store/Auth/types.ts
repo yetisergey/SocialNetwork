@@ -1,11 +1,11 @@
 import { ILoginResponse } from "../../models/auth/types";
 
-export const REQUEST = 'REQUEST'
-export const AUTH_SUCCESS = 'AUTH_SUCCESS'
-export const AUTH_FAIL = 'AUTH_FAIL'
+export const LOGIN_REQUEST = 'LOGIN_REQUEST'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const LOGIN_FAIL = 'LOGIN_FAIL'
 
 interface ILoginActionTypes {
-    type: typeof REQUEST | typeof AUTH_SUCCESS | typeof AUTH_FAIL
+    type: typeof LOGIN_REQUEST | typeof LOGIN_SUCCESS | typeof LOGIN_FAIL
     payload: ILoginResponse
 }
 
@@ -15,4 +15,14 @@ interface ILogoutActionTypes {
     type: typeof LOGOUT
 }
 
-export type AuthActionTypes = ILoginActionTypes | ILogoutActionTypes;
+export const REGISTER_REQUEST = 'REGISTER_REQUEST'
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
+export const REGISTER_FAIL = 'REGISTER_FAIL'
+
+interface IReisterActionTypes
+{
+    type: typeof REGISTER_REQUEST | typeof REGISTER_SUCCESS | typeof REGISTER_FAIL
+    payload: ILoginResponse
+}
+
+export type AuthActionTypes = ILoginActionTypes | ILogoutActionTypes | IReisterActionTypes;

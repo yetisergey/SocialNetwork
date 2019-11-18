@@ -1,12 +1,13 @@
-﻿namespace Domain.Models
+﻿#nullable disable
+namespace Domain.Models
 {
     public class Interest
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
         public bool IsDeleted { get; set; }
 
         public int UserId { get; set; }
-        public User User { get; set; } = new User();
+        public virtual User User { get; set; }
     }
 }

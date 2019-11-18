@@ -1,6 +1,7 @@
 ﻿namespace Services
 {
     using Domain;
+    using Domain.Models;
     using Mappings.User;
     using Microsoft.EntityFrameworkCore;
     using Services.Models.User;
@@ -14,7 +15,6 @@
     public interface IUserService
     {
         Task<List<UserModel>> GetUsersAsync(string search, int take, int skip);
-        Task<List<UserModel>> GetUserFriendsAsync(int userId);
         Task<UserModel> GetUserAsync(int id);
         Task<UserModel> GetUserAsync(string email, string password);
         Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel);
@@ -50,14 +50,6 @@
             return dbUser.MapToUserModel();
         }
 
-        public async Task<List<UserModel>> GetUserFriendsAsync(int userId)
-        {
-            var dbUsers = await _socialNetworkContext.Users.Include(u=>u.Friends)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-                                 
-            return dbUsers.Friends.Select(dbUser => dbUser.User.MapToUserModel()).ToList();
-        }
-
         public async Task<List<UserModel>> GetUsersAsync(string search, int take, int skip)
         {
             var dbUsers = await _socialNetworkContext.Users
@@ -68,9 +60,17 @@
             return dbUsers.Select(dbUser => dbUser.MapToUserModel()).ToList();
         }
 
-        public Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)
+        public async Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)
         {
-            throw new NotImplementedException();
+            var userEntity = await _socialNetworkContext.Users.AddAsync(new User
+            {
+                Email = userRegisterModel.Email,
+                FirstName = userRegisterModel.FirstName,
+                LastName = userRegisterModel.LastName,
+                Password = userRegisterModel.Password
+            });
+            await _socialNetworkContext.SaveChangesAsync();
+            return userEntity.Entity.MapToUserModel();
         }
 
         public Task UpdateUser(UserModel userModel)

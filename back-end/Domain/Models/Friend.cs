@@ -1,11 +1,14 @@
-﻿namespace Domain.Models
+﻿#nullable disable
+namespace Domain.Models
 {
     public class Friend
     {
-        public int Id { get; set; }
-
         public int UserId { get; set; }
 
-        public User User { get; set; } = new User();
+        public virtual User User { get; set; }
+
+        public int UserFriendId { get; set; }
+
+        public virtual User UserFriend { get; set; }
     }
 }

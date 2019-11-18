@@ -62,8 +62,8 @@ class Interests extends React.Component<IInterestsProps, IInterestsState>
                 {arrayOfInterests && <h1>Interests</h1>}
                 <InterestsWrap>
                     {arrayOfInterests &&
-                        arrayOfInterests.map(i => <InterestsName key={i.Id}>
-                            {i.Name}
+                        arrayOfInterests.map(i => <InterestsName key={i.id}>
+                            {i.name}
                         </InterestsName>)}
                     <InterestsAdd onClick={this.addInterest.bind(this)}>
                         {

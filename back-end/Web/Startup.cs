@@ -41,8 +41,10 @@
 
             services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFriendService, FriendService>();
             services.AddTransient<IInterestsService, InterestsService>();
             services.AddTransient<ISocialNetworkContext, SocialNetworkContext>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

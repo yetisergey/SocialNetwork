@@ -13,18 +13,18 @@
     [RedisAuthorize]
     public class FriendsController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IFriendService _friendService;
 
-        public FriendsController(IUserService userService)
+        public FriendsController(IFriendService friendService)
         {
-            _userService = userService;
+            _friendService = friendService;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
             var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
-            var userModels = await _userService.GetUserFriendsAsync(userId);
+            var userModels = await _friendService.GetUserFriendsAsync(userId);
             var result = userModels.Select(u => u.ToUserResponse()).ToList();
             return Ok(result);
         }

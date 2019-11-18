@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
+interface IColorProps {
+  color?: string;
+  hoverColor?: string;
+}
+
 export const ButtonWrap = styled.button`
-background-color: #629aaa;
+background-color: ${(props: IColorProps) => props.color ? props.color : '#629aaa'};
 padding: 10px;
 border-radius: 5px;
 border: none;
@@ -12,11 +17,11 @@ outline: none;
 cursor: pointer;
 
 &:hover {
-    background-color: #53808d;
+    background-color:  ${(props: IColorProps) => props.hoverColor ? props.hoverColor : '#53808d'};
   }
 
   &:active {
-    background-color: #53808d;
+    background-color: ${(props: IColorProps) => props.hoverColor ? props.hoverColor : '#53808d'};
     }
 
 &:focus {

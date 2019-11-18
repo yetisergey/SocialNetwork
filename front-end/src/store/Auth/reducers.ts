@@ -1,6 +1,5 @@
 import { IAuthStore } from "../../models/auth/types";
-import { REQUEST, AUTH_FAIL, LOGOUT } from "./types";
-import { AuthActionTypes, AUTH_SUCCESS } from "./types";
+import { AuthActionTypes, REGISTER_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, REGISTER_FAIL, REGISTER_SUCCESS } from "./types";
 
 export const initialStateAuth: IAuthStore = {
     loading: false,
@@ -11,12 +10,13 @@ export const initialStateAuth: IAuthStore = {
 export function authReducer(state: IAuthStore = initialStateAuth, action: AuthActionTypes) {
     console.log(action.type)
     switch (action.type) {
-        case REQUEST:
+        case REGISTER_REQUEST:
+        case LOGIN_REQUEST:
             return {
                 ...state,
                 loading: true
             };
-        case AUTH_SUCCESS:
+        case LOGIN_SUCCESS:
             localStorage.setItem('accessToken', action.payload.accessToken);
             localStorage.setItem('userId', action.payload.userId)
             return {
@@ -25,7 +25,22 @@ export function authReducer(state: IAuthStore = initialStateAuth, action: AuthAc
                 userId: action.payload.userId,
                 loading: false
             };
-        case AUTH_FAIL:
+        case REGISTER_SUCCESS:
+            localStorage.setItem('accessToken', action.payload.accessToken);
+            localStorage.setItem('userId', action.payload.userId)
+            return {
+                ...state,
+                accessToken: action.payload.accessToken,
+                userId: action.payload.userId,
+                loading: false
+            };
+        case LOGIN_FAIL:
+            return {
+                ...state,
+                accessToken: '',
+                loading: false
+            };
+        case REGISTER_FAIL:
             return {
                 ...state,
                 accessToken: '',

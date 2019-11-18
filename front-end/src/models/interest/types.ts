@@ -1,9 +1,9 @@
 export interface IInterestsStore {
-    arrayOfInterests: Array<IInterest>;
+    arrayOfInterests: IInterest[];
     addInputVisible: boolean;
 }
 
 export interface IInterest {
-    Id: number;
-    Name: string;
+    id: number;
+    name: string;
 }

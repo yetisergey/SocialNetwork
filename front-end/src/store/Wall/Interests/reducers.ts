@@ -1,16 +1,16 @@
 import {
-    LOAD_INTERESTS_REQUEST,
     InterestsActionTypes,
     SHOW_ADD_INTEREST,
-    ADD_INTEREST_REQUEST,
-    HIDE_ADD_INTEREST
+    HIDE_ADD_INTEREST,
+    LOAD_INTERESTS_SUCCESS,
+    ADD_INTEREST_SUCCESS
 } from "./types"
 import { IInterestsStore } from "../../../models/interest/types";
 
 
 export function interestReducer(state: IInterestsStore, action: InterestsActionTypes) {
     switch (action.type) {
-        case LOAD_INTERESTS_REQUEST:
+        case LOAD_INTERESTS_SUCCESS:
             return {
                 ...state,
                 arrayOfInterests: action.payload
@@ -25,7 +25,7 @@ export function interestReducer(state: IInterestsStore, action: InterestsActionT
                 ...state,
                 addInputVisible: false
             };
-        case ADD_INTEREST_REQUEST:
+        case ADD_INTEREST_SUCCESS:
             return {
                 ...state,
                 arrayOfInterests: state.arrayOfInterests.concat([action.payload])

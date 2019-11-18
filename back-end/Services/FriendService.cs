@@ -13,6 +13,7 @@
     {
         Task<List<UserModel>> GetUserFriends(int id, int take, int skip);
         Task<List<UserModel>> SearchFriendsAsync(string search, int take, int skip);
+        Task<List<UserModel>> GetUserFriendsAsync(int userId);
     }
 
     public class FriendService : IFriendService
@@ -29,6 +30,15 @@
             var dbUsers = await _socialNetworkContext.Users.Where(u => (u.FirstName + u.LastName).Contains(search)).ToListAsync();
             var res = dbUsers.Select(u => u.MapToUserModel()).ToList();
             return res;
+        }
+
+        public async Task<List<UserModel>> GetUserFriendsAsync(int userId)
+        {
+            var dbUsers = await _socialNetworkContext.Friends
+                .Include(u => u.UserFriend)
+                .Where(u => u.UserId == userId).ToListAsync();
+
+            return dbUsers.Select(dbUser => dbUser.UserFriend.MapToUserModel()).ToList();
         }
 
         public Task<List<UserModel>> GetUserFriends(int id, int take, int skip)
