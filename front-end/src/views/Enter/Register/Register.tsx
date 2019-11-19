@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { registerAction } from '../../../store/Auth/actions';
 import { storeType, history } from "../../../store";
-import { LargeLabel } from "../../../components/Label/Label";
 
 type IRegisterProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};
@@ -59,14 +58,12 @@ class Register extends React.Component<IRegisterProps, IRegisterState> {
     render() {
         return (
             <Wrapper>
-                <LargeLabel>Register in SocialNetwork</LargeLabel>
-                <br></br>
                 <RegisterInput name="email" onChange={this.setEmail.bind(this)} ></RegisterInput>
                 <Password type="password" onChange={this.setPassword.bind(this)} ></Password>
                 <RegisterInput name="firstName" onChange={this.setFirstName.bind(this)} ></RegisterInput>
                 <RegisterInput name="lastName" onChange={this.setLastName.bind(this)} ></RegisterInput>
                 <RegisterFormButtons>
-                    <ButtonSquare onClick={this.tryRegister.bind(this)}>Register</ButtonSquare>
+                    <ButtonSquare color="#ea185f" hoverColor="#c71752"  onClick={this.tryRegister.bind(this)}>Register</ButtonSquare>
                 </RegisterFormButtons>
             </Wrapper>
         );

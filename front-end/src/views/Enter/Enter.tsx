@@ -2,53 +2,55 @@ import React from "react";
 import { connect } from "react-redux";
 import { storeType } from "../../store";
 import Login from "./Login";
-import { Wrapper, WrapperForm, Form } from "./Enter.style";
+import { Wrapper, WrapperForm, Form, NavBarWrapper, NavBarButton, LogoWrapper, Logo, BackArrowWrapper } from "./Enter.style";
 import Register from "./Register";
-import { ButtonSquare } from "../../components/Button";
+import logoSrc from "../../img/logo.png";
+import arrowLeftSrc from "../../img/arrowLeft.png";
 
 type IEnterProps = ReturnType<typeof mapStateToProps> & {};
 
 interface IEnterState {
     loginView: boolean;
-    loginViewButtonText: string;
 }
 
 class Enter extends React.Component<IEnterProps, IEnterState> {
     constructor(props: IEnterProps) {
         super(props);
         this.state = {
-            loginView: true,
-            loginViewButtonText: "Register"
+            loginView: true
         }
     }
 
     openRegisterPage() {
-        const { loginView } = this.state;
-        if (loginView) {
-            this.setState({
-                loginView: !loginView,
-                loginViewButtonText: "Login"
-            });
-        } else {
-            this.setState({
-                loginView: !loginView,
-                loginViewButtonText: "Register"
-            });
-        }
+        this.setState({ loginView: false });
+    }
+
+    openLoginPage() {
+        this.setState({ loginView: true });
     }
 
     render() {
-        const { loginView, loginViewButtonText } = this.state;
+        const { loginView } = this.state;
         return (
             <Wrapper>
                 <WrapperForm>
+                    {
+                        !loginView &&
+                        <BackArrowWrapper onClick={() => this.openLoginPage()} src={arrowLeftSrc} />
+                    }
+                    <LogoWrapper>
+                        <Logo src={logoSrc}></Logo>
+                    </LogoWrapper>
+                    <NavBarWrapper>
+                        <NavBarButton active={loginView} onClick={() => this.openLoginPage()}>SIGN IN</NavBarButton>
+                        <NavBarButton active={!loginView} onClick={() => this.openRegisterPage()}>SIGN UP</NavBarButton>
+                    </NavBarWrapper>
                     <Form>
                         {
-                            loginView ? <Login></Login> : <Register></Register>
+                            loginView ?
+                                <Login></Login> :
+                                <Register></Register>
                         }
-                        <ButtonSquare color="#23b023" hoverColor="#209b20" onClick={this.openRegisterPage.bind(this)}>
-                            { loginViewButtonText }
-                        </ButtonSquare>
                     </Form>
                 </WrapperForm>
             </Wrapper>

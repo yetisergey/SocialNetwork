@@ -62,12 +62,13 @@
 
         public async Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)
         {
+            var password = GetGuidFromPassword(userRegisterModel.Password);
             var userEntity = await _socialNetworkContext.Users.AddAsync(new User
             {
                 Email = userRegisterModel.Email,
                 FirstName = userRegisterModel.FirstName,
                 LastName = userRegisterModel.LastName,
-                Password = userRegisterModel.Password
+                Password = password.ToString()
             });
             await _socialNetworkContext.SaveChangesAsync();
             return userEntity.Entity.MapToUserModel();

@@ -6,7 +6,6 @@ import { bindActionCreators, Dispatch } from "redux";
 import { loginAction } from '../../../store/Auth/actions';
 import { storeType, history } from "../../../store";
 import { LoginInput } from "./Login.style";
-import { LargeLabel } from "../../../components/Label/Label";
 
 type ILoginProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};
@@ -48,12 +47,10 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     render() {
         return (
             <Wrapper>
-                <LargeLabel>Login in SocialNetwork</LargeLabel>
-                <br></br>
                 <LoginInput onChange={this.handleChangeLogin.bind(this)} ></LoginInput>
                 <Password type="password" onChange={this.handleChangePassword.bind(this)} ></Password>
                 <LoginFormButtons>
-                    <ButtonSquare onClick={this.tryLogin.bind(this)}>Login</ButtonSquare>
+                    <ButtonSquare color="#ea185f" hoverColor="#c71752" onClick={() => this.tryLogin()}>LOGIN</ButtonSquare>
                 </LoginFormButtons>
             </Wrapper>
         );

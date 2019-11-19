@@ -9,8 +9,8 @@ let getAuthHeaders = () => {
 }
 
 export default function request(path: string, params: AxiosRequestConfig) {
-    let url = "http://localhost:50396";
-    let headers = { ...params.headers, ...getAuthHeaders() };
+    const url = "http://localhost:50396";
+    const headers = { ...params.headers, ...getAuthHeaders() };
     return axios({
         ...params,
         url: url + path,
