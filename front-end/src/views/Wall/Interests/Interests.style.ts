@@ -56,3 +56,10 @@ export const SaveWrap = styled.div`
     padding-top: 1px;
     height: 20px;
 `
+
+export const Icon = styled.img`
+    height: 100%;
+    width: auto;
+`
+
+export const Label = styled.h1``

@@ -1,13 +1,24 @@
 import React from "react";
 import {
-    InterestsWrapper, InterestsWrap,
-    InterestsName, InterestsAdd,
-    InterestInput, InterestInputWrap, SaveWrap
+    InterestsWrapper,
+    InterestsWrap,
+    InterestsName,
+    InterestsAdd,
+    InterestInput,
+    InterestInputWrap,
+    SaveWrap,
+    Icon,
+    Label
 } from "./Interests.style";
-import { loadInterestsAction, showAddInputAction, addInterestAction, hideAddInputAction } from "../../../store/Wall/Interests/actions";
+import {
+    loadInterestsAction,
+    showAddInputAction,
+    addInterestAction,
+    hideAddInputAction
+} from "../../../store/Wall/Interests/actions";
 import { bindActionCreators, Dispatch } from "redux";
 import { connect } from "react-redux";
-import { SaveIcon } from "../../../components/Icon/Icon";
+import * as images from "../../../img";
 import { IInterestsStore } from "../../../models/interest/types";
 
 type IInterestsProps = ReturnType<typeof mapStateToProps> &
@@ -40,26 +51,26 @@ class Interests extends React.Component<IInterestsProps, IInterestsState>
         }
     }
 
-    showDialog() {
-        return (<InterestInputWrap>
-            <InterestInput onChange={this.handleChangeName.bind(this)}></InterestInput>
-            <SaveWrap onClick={this.saveInterest.bind(this)}>
-                <SaveIcon></SaveIcon>
-            </SaveWrap>
-        </InterestInputWrap>)
-    }
-
     saveInterest() {
         const { interestNameToAdd } = this.state;
         this.props.addInterest(interestNameToAdd)
         this.props.hideAddInput()
     }
 
+    showDialog() {
+        return (<InterestInputWrap>
+            <InterestInput onChange={this.handleChangeName.bind(this)}></InterestInput>
+            <SaveWrap onClick={() => { this.saveInterest() }}>
+                <Icon src={images.ok}></Icon>
+            </SaveWrap>
+        </InterestInputWrap>)
+    }
+
     render() {
         const { arrayOfInterests } = this.props;
         return (
             <InterestsWrapper>
-                {arrayOfInterests && <h1>Interests</h1>}
+                {arrayOfInterests && <Label>Interests</Label>}
                 <InterestsWrap>
                     {arrayOfInterests &&
                         arrayOfInterests.map(i => <InterestsName key={i.id}>

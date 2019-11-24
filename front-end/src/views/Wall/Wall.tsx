@@ -1,67 +1,69 @@
 import React from "react";
-import { WallWrapp, LeftSide, RightSide } from "./Wall.style";
-import { ButtonSquare } from "../../components/Button";
-import AvatarWrapp from "../../components/Avatar";
+import {
+    WallWrapper,
+    ProfileWrapper,
+    WrapperForm,
+    AvatarWrapper,
+    Icon,
+    Name,
+    NavWrapper,
+    Settings,
+    Label
+} from "./Wall.style";
 import CollapsibleText from "../../components/CollapsibleText";
-import { Label, LargeLabel } from "../../components/Label";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { loadUserProfileAction } from '../../store/Wall/actions';
-import { storeType, history } from "../../store";
+import { storeType } from "../../store";
 import Interests from "./Interests/Interests";
-import { Link } from 'react-router-dom'
-import { logoutAction } from "../../store/Auth/actions";
+import Menu from "../../components/Menu";
+import * as images from "../../img";
 
-type Props = ReturnType<typeof mapStateToProps> &
+type IWallProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps> & {};
 
-class Wall extends React.Component<Props> {
-    componentDidMount() {
-        const { loadUserProfile } = this.props;
-        loadUserProfile();
+interface IWallState {
+    isOpenedMenu: boolean;
+}
+
+class Wall extends React.Component<IWallProps, IWallState> {
+    constructor(props: IWallProps) {
+        super(props);
+        this.state = { isOpenedMenu: false }
     }
 
-    logout() {
-        this.props.logoutAction();
-        history.push('/enter');
+    componentDidMount() {
+        this.props.loadUserProfile();
+    }
+
+    toggleMenu(open: boolean) {
+        this.setState({ isOpenedMenu: open });
     }
 
     render() {
+        const { isOpenedMenu } = this.state;
         const { user, interests } = this.props;
         return (
-            <WallWrapp>
-                <LeftSide>
-                    <AvatarWrapp src={user.avatar} />
-                    <Link to="/messages">
-                        <ButtonSquare>
-                            Messages
-                        </ButtonSquare>
-                    </Link>
-                    <Link to="/friends">
-                        <ButtonSquare>
-                            My friends
-                        </ButtonSquare>
-                    </Link>
-                    <Link to="/people">
-                        <ButtonSquare>
-                            Find friends
-                        </ButtonSquare>
-                    </Link>
-                    <ButtonSquare onClick={this.logout.bind(this)}>
-                        Exit
-                    </ButtonSquare>
-                    <Interests {...interests}></Interests>
-                </LeftSide>
-                <RightSide>
-                    <LargeLabel>{user.lastName} {user.firstName}</LargeLabel>
-                    <br />
-                    {/* <CursiveLabel>{user.status}</CursiveLabel> */}
-                    <br />
-                    <Label>About</Label>
-                    <br />
-                    <CollapsibleText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}></CollapsibleText>
-                </RightSide>
-            </WallWrapp>
+            <WallWrapper>
+                <WrapperForm>
+                    {isOpenedMenu && <Menu user={user} close={() => { this.toggleMenu(false) }}></Menu>}
+                    <ProfileWrapper>
+                        <AvatarWrapper src={user.avatar}>
+                            <NavWrapper>
+                                <Icon onClick={() => this.toggleMenu(true)} src={images.burgerMenu}></Icon>
+                                <Settings>
+                                    <Icon src={images.search}></Icon>
+                                    <Icon src={user.avatar}></Icon>
+                                </Settings>
+                            </NavWrapper>
+                            <Name>{user.lastName} {user.firstName}</Name>
+                        </AvatarWrapper>
+                        <Label>Status</Label>
+                        <CollapsibleText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}></CollapsibleText>
+                        <Interests {...interests}></Interests>
+                    </ProfileWrapper>
+                </WrapperForm>
+            </WallWrapper>
         );
     }
 }
@@ -69,8 +71,7 @@ class Wall extends React.Component<Props> {
 const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
         {
-            loadUserProfile: loadUserProfileAction,
-            logoutAction: logoutAction
+            loadUserProfile: loadUserProfileAction
         },
         dispatch
     );

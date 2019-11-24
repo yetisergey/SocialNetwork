@@ -11,3 +11,5 @@ export const ShowMoreText = styled.div`
     display: inline-block;
     border-bottom: 1px dashed #000080;
 `
+
+export const Text = styled.div``;

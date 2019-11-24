@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import Text from "../Text";
-import { CollapsibleTextWrapper } from "./CollapsibleText.style";
+import { CollapsibleTextWrapper, Text } from "./CollapsibleText.style";
 import { ShowMore } from './ShowMore';
 
 interface ICollapsibleText {
@@ -26,11 +25,8 @@ export default class CollapsibleText extends Component<ICollapsibleText, ICollap
         const { text, count = 256 } = this.props;
 
         return (<CollapsibleTextWrapper>
-            <Text text={!this.state.isOpen ? text.slice(0, count) : text}></Text>
-            {!this.state.isOpen
-                &&
-                <ShowMore onClick={this.openText.bind(this)}></ShowMore>}
-
+            <Text>{!this.state.isOpen ? text.slice(0, count) : text}</Text>
+            {!this.state.isOpen && <ShowMore onClick={this.openText.bind(this)}></ShowMore>}
         </CollapsibleTextWrapper>);
     }
 }
