@@ -11,9 +11,9 @@
 
     public interface IFriendService
     {
-        Task<List<UserModel>> GetUserFriends(int id, int take, int skip);
         Task<List<UserModel>> SearchFriendsAsync(string search, int take, int skip);
         Task<List<UserModel>> GetUserFriendsAsync(int userId);
+        Task AddUserToFriendsAsync(int userId, int friendId);
     }
 
     public class FriendService : IFriendService
@@ -27,9 +27,12 @@
 
         public async Task<List<UserModel>> SearchFriendsAsync(string search = "", int take = 50, int skip = 0)
         {
-            var dbUsers = await _socialNetworkContext.Users.Where(u => (u.FirstName + u.LastName).Contains(search)).ToListAsync();
-            var res = dbUsers.Select(u => u.MapToUserModel()).ToList();
-            return res;
+            var dbUsers = await _socialNetworkContext.Users
+                .Where(u => (u.FirstName + u.LastName).Contains(search))
+                                 .Skip(skip)
+                                 .Take(take)
+                                 .ToListAsync();
+            return dbUsers.Select(dbUser => dbUser.MapToUserModel()).ToList();
         }
 
         public async Task<List<UserModel>> GetUserFriendsAsync(int userId)
@@ -41,7 +44,7 @@
             return dbUsers.Select(dbUser => dbUser.UserFriend.MapToUserModel()).ToList();
         }
 
-        public Task<List<UserModel>> GetUserFriends(int id, int take, int skip)
+        public Task AddUserToFriendsAsync(int userId, int friendId)
         {
             throw new NotImplementedException();
         }

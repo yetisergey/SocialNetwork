@@ -1,8 +1,11 @@
-﻿namespace Domain
+﻿#nullable disable
+namespace Domain
 {
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Models;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public interface ISocialNetworkContext
@@ -11,21 +14,16 @@
         DbSet<Interest> Interests { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Wall> Walls { get; set; }
-        Task SaveChangesAsync();
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+        EntityEntry Update(object entity);
     }
 
-#nullable disable
     public class SocialNetworkContext : DbContext, ISocialNetworkContext
     {
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Wall> Walls { get; set; }
-
-        public async Task SaveChangesAsync()
-        {
-            await base.SaveChangesAsync();
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

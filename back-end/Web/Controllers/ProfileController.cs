@@ -6,7 +6,8 @@
     using Services;
     using System.Threading.Tasks;
     using Web.Helpers;
-    using Web.Models.User;
+    using Web.Mappings.Profile;
+    using Web.Models.Profile;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -25,13 +26,22 @@
         {
             var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
             var userModel = await _userService.GetUserAsync(userId);
-            return Ok(new UserResponse()
+            return Ok(new ProfileResponse()
             {
                 Id = userModel.Id,
                 Email = userModel.Email,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName
             });
+        }
+
+        [HttpPatch]
+        public async Task<ActionResult> PatchAsync([FromBody] ProfileRequest profileRequest)
+        {
+            var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
+            var updateModel = profileRequest.ToUserUpdateModel();
+            await _userService.UpdateUser(userId, updateModel);
+            return Ok();
         }
 
     }

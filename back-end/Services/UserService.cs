@@ -6,7 +6,6 @@
     using Microsoft.EntityFrameworkCore;
     using Services.Models.User;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -14,11 +13,10 @@
 
     public interface IUserService
     {
-        Task<List<UserModel>> GetUsersAsync(string search, int take, int skip);
         Task<UserModel> GetUserAsync(int id);
         Task<UserModel> GetUserAsync(string email, string password);
         Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel);
-        Task UpdateUser(UserModel userModel);
+        Task UpdateUser(int id, UserUpdateModel userModel);
         Task DeleteUser(int id);
     }
 
@@ -31,9 +29,11 @@
             _socialNetworkContext = socialNetworkContext;
         }
 
-        public Task DeleteUser(int id)
+        public async Task DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            var dbUser = await _socialNetworkContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+            dbUser.IsDeleted = true;
+            await _socialNetworkContext.SaveChangesAsync();
         }
 
         public async Task<UserModel> GetUserAsync(int id)
@@ -50,16 +50,6 @@
             return dbUser.MapToUserModel();
         }
 
-        public async Task<List<UserModel>> GetUsersAsync(string search, int take, int skip)
-        {
-            var dbUsers = await _socialNetworkContext.Users
-                .Where(u => (u.FirstName + u.LastName).Contains(search))
-                                 .Skip(skip)
-                                 .Take(take)
-                                 .ToListAsync();
-            return dbUsers.Select(dbUser => dbUser.MapToUserModel()).ToList();
-        }
-
         public async Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)
         {
             var password = GetGuidFromPassword(userRegisterModel.Password);
@@ -74,9 +64,26 @@
             return userEntity.Entity.MapToUserModel();
         }
 
-        public Task UpdateUser(UserModel userModel)
+        public async Task UpdateUser(int id, UserUpdateModel userModel)
         {
-            throw new NotImplementedException();
+            var user = await GetUserAsync(id);
+
+            //todo: automapper
+            if (!string.IsNullOrEmpty(userModel.Email))
+            {
+                user.Email = userModel.Email;
+            }
+            else if (!string.IsNullOrEmpty(userModel.FirstName))
+            {
+                user.FirstName = userModel.FirstName;
+            }
+            else if (!string.IsNullOrEmpty(userModel.LastName))
+            {
+                user.LastName = userModel.LastName;
+            }
+
+            _socialNetworkContext.Update(user);
+            await _socialNetworkContext.SaveChangesAsync();
         }
 
         private Guid GetGuidFromPassword(string password)

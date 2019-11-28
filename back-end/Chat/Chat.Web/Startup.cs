@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-namespace Chat.Web
+﻿namespace Chat.Web
 {
+    using Authorization.Service;
+    using Chat.Domain;
+    using Chat.Services;
+    using Chat.Web.Hubs;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -18,16 +19,23 @@ namespace Chat.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddSignalR();
+
+            services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
+            services.AddTransient<IChatService, ChatService>();
+            services.AddTransient<IChatContext, ChatContext>();
 
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
+            app.UseEndpoints(routes =>
             {
-                app.UseDeveloperExceptionPage();
-            }
+                routes.MapHub<ChatHub>("/chat");
+            });
         }
     }
 }
