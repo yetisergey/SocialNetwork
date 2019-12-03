@@ -14,7 +14,7 @@
     public interface IUserService
     {
         Task<UserModel> GetUserAsync(int id);
-        Task<UserModel> GetUserAsync(string email, string password);
+        Task<UserModel?> GetUserAsync(string email, string password);
         Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel);
         Task UpdateUser(int id, UserUpdateModel userModel);
         Task DeleteUser(int id);
@@ -42,12 +42,20 @@
             return dbUser.MapToUserModel();
         }
 
-        public async Task<UserModel> GetUserAsync(string email, string password)
+        public async Task<UserModel?> GetUserAsync(string email, string password)
         {
             var passwordHash = GetGuidFromPassword(password);
             var dbUser = await _socialNetworkContext.Users
-                .FirstAsync(u => u.Email == email && u.Password == passwordHash.ToString());
-            return dbUser.MapToUserModel();
+                .FirstOrDefaultAsync(u => u.Email == email && u.Password == passwordHash.ToString());
+
+            if (dbUser == null)
+            {
+                return null;
+            }
+            else
+            {
+                return dbUser.MapToUserModel();
+            }
         }
 
         public async Task<UserModel> RegisterUser(UserRegisterModel userRegisterModel)

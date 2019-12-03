@@ -47,21 +47,22 @@ class Wall extends React.Component<IWallProps, IWallState> {
             <WallWrapper>
                 <WrapperForm>
                     {isOpenedMenu && <Menu user={user} close={() => { this.toggleMenu(false) }}></Menu>}
-                    <ProfileWrapper>
-                        <AvatarWrapper src={user.avatar}>
-                            <NavWrapper>
-                                <Icon onClick={() => this.toggleMenu(true)} src={images.burgerMenu}></Icon>
-                                <Settings>
-                                    <Icon src={images.search}></Icon>
-                                    <Icon src={user.avatar}></Icon>
-                                </Settings>
-                            </NavWrapper>
-                            <Name>{user.lastName} {user.firstName}</Name>
-                        </AvatarWrapper>
-                        <Label>Status</Label>
-                        <CollapsibleText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}></CollapsibleText>
-                        <Interests {...interests}></Interests>
-                    </ProfileWrapper>
+                    {user &&
+                        <ProfileWrapper>
+                            <AvatarWrapper src={user.avatar}>
+                                <NavWrapper>
+                                    <Icon onClick={() => this.toggleMenu(true)} src={images.burgerMenu}></Icon>
+                                    <Settings>
+                                        <Icon src={images.search}></Icon>
+                                        <Icon src={user.avatar}></Icon>
+                                    </Settings>
+                                </NavWrapper>
+                                <Name>{user.lastName} {user.firstName}</Name>
+                            </AvatarWrapper>
+                            <Label>Status</Label>
+                            <CollapsibleText text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}></CollapsibleText>
+                            <Interests {...interests}></Interests>
+                        </ProfileWrapper>}
                 </WrapperForm>
             </WallWrapper>
         );

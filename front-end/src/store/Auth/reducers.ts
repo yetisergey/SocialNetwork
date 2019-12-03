@@ -3,12 +3,11 @@ import { AuthActionTypes, REGISTER_REQUEST, LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_
 
 export const initialStateAuth: IAuthStore = {
     loading: false,
-    accessToken: localStorage.getItem('accessToken') || null,
-    userId: localStorage.getItem('userId') || null
+    accessToken: localStorage.getItem('accessToken') || '',
+    userId: localStorage.getItem('userId') || ''
 }
 
 export function authReducer(state: IAuthStore = initialStateAuth, action: AuthActionTypes) {
-    console.log(action.type)
     switch (action.type) {
         case REGISTER_REQUEST:
         case LOGIN_REQUEST:

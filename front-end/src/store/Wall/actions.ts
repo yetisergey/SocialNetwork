@@ -1,6 +1,6 @@
 import { REQUEST, LOAD_USER_SUCCESS, LOAD_USER_FAIL } from './types'
 import { action } from 'typesafe-actions';
-import { getUserProfile } from '../../api/profile/profile-api';
+import { getUserProfile } from '../../api/network/profile/profile-api';
 import { Dispatch } from 'redux';
 
 export const loadUserProfileAction = () => {

@@ -1,7 +1,7 @@
 import { LOAD_FRIENDS_SUCCESS, REQUEST, LOAD_FRIENDS_FAIL } from './types'
 import { action } from 'typesafe-actions';
 import { Dispatch } from 'redux';
-import { getFriends } from '../../api/friend/friend-api';
+import { getFriends } from '../../api/network/friend/friend-api';
 
 export const loadFriendsAction = () => {
     return (dispatch: Dispatch) => {

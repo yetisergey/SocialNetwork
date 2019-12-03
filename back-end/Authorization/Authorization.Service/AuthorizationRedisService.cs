@@ -21,6 +21,7 @@
         public async Task AuthorizeUserAsync(int userId, string token)
         {
             var key = GetAuthUserKey(userId);
+            await _distributedCache.RemoveAsync(key);
             await _distributedCache.SetStringAsync(key, token);
         }
 

@@ -23,7 +23,6 @@ export const initialStateWall: IWallStore = {
 }
 
 export function wallReducer(state: IWallStore = initialStateWall, action: WallActionTypes) {
-    console.log(action.type)
     switch (action.type) {
         case REQUEST:
             return {

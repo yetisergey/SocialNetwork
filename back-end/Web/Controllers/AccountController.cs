@@ -1,10 +1,12 @@
 ﻿namespace Web.Controllers
 {
-    using Authorization.Service;
+    using Authorization.Attributes;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.IdentityModel.Tokens;
     using Services;
     using Services.Models.User;
+    using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
     using System.Security.Claims;
@@ -16,12 +18,10 @@
     [AllowAnonymous]
     public class AccountController : ControllerBase
     {
-        private readonly IAuthorizationRedisService _authorizeService;
         private readonly IUserService _userService;
 
-        public AccountController(IAuthorizationRedisService authorizeService, IUserService userService)
+        public AccountController(IUserService userService)
         {
-            _authorizeService = authorizeService;
             _userService = userService;
         }
 
@@ -35,15 +35,11 @@
                 return BadRequest("Invalid username or password.");
             }
 
-            var identity = GetIdentityAsync(userModel);
-            var jwt = new JwtSecurityToken(claims: identity.Claims);
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            await _authorizeService.AuthorizeUserAsync(userModel.Id, encodedJwt);
+            var encodedJwt = Authenticate(userModel);
 
             return Ok(new LoginResponse()
             {
-                AccessToken = encodedJwt,
-                UserId = userModel.Id
+                AccessToken = encodedJwt
             });
         }
 
@@ -63,30 +59,38 @@
 
             if (userModel == null)
             {
-                return BadRequest("Invalid username or password.");
+                return BadRequest("Can not register user");
             }
 
-            var identity = GetIdentityAsync(userModel);
-            var jwt = new JwtSecurityToken(claims: identity.Claims);
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            await _authorizeService.AuthorizeUserAsync(userModel.Id, encodedJwt);
+            var encodedJwt = Authenticate(userModel);
 
             return Ok(new LoginResponse()
             {
-                AccessToken = encodedJwt,
-                UserId = userModel.Id
+                AccessToken = encodedJwt
             });
+        }
+
+        private string Authenticate(UserModel userModel)
+        {
+            var identity = GetIdentityAsync(userModel);
+            var now = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                issuer: AuthOptions.Issuer,
+                notBefore: now,
+                claims: identity.Claims,
+                expires: now.Add(TimeSpan.FromMinutes(AuthOptions.Lifetime)),
+                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+            return encodedJwt;
         }
 
         private ClaimsIdentity GetIdentityAsync(UserModel userModel)
         {
-            var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, userModel.Id.ToString())
-                };
-
+            var claims = new List<Claim> {
+                new Claim(ClaimTypes.Name, userModel.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, userModel.Id.ToString())
+            };
             var claimsIdentity = new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-
             return claimsIdentity;
         }
     }

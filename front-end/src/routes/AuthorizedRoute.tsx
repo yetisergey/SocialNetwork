@@ -5,10 +5,11 @@ import { storeType, history } from '../store';
 type Props = ReturnType<typeof mapStateToProps> & RouteProps;
 
 class AuthorizedRoute extends Route<Props> {
-    componentDidMount() {
-        if (!this.props.authenticated) {
+    constructor(props: Props) {
+        if (!props.authenticated) {
             history.push("/enter")
         }
+        super(props);
     }
 }
 

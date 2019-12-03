@@ -7,7 +7,5 @@
             : base(typeof(RedisAuthorizeActionFilter))
         {
         }
-
-        public int MyProperty { get; set; }
     }
 }

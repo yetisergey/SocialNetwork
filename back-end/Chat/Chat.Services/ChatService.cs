@@ -41,8 +41,7 @@
         public Task<List<MessageModel>> GetMessages(int userFromId, int userToId)
         {
             return _chatContext.Messages
-                .Where(u => u.UserFromId == userFromId)
-                .Where(u => u.UserToId == userToId)
+                .Where(u => u.UserFromId == userFromId && u.UserToId == userToId || u.UserFromId == userToId && u.UserToId == userFromId)
                 .OrderBy(u => u.CreatedDate)
                 .Select(u => u.ToMessageModel())
                 .ToListAsync();

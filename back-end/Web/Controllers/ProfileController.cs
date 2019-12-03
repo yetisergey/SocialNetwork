@@ -1,17 +1,18 @@
 ﻿namespace Web.Controllers
 {
     using Authorization.Attributes;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Services;
     using System.Threading.Tasks;
-    using Web.Helpers;
     using Web.Mappings.Profile;
     using Web.Models.Profile;
 
     [Route("api/[controller]")]
     [ApiController]
-    [RedisAuthorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ProfileController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -22,9 +23,10 @@
         }
 
         [HttpGet]
+
         public async Task<ActionResult> GetAsync()
         {
-            var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
+            var userId = HttpContext.User.GetUserId();
             var userModel = await _userService.GetUserAsync(userId);
             return Ok(new ProfileResponse()
             {
@@ -38,7 +40,7 @@
         [HttpPatch]
         public async Task<ActionResult> PatchAsync([FromBody] ProfileRequest profileRequest)
         {
-            var userId = HeaderHelper.GetUserIdFromHeaders(HttpContext.Request.Headers);
+            var userId = HttpContext.User.GetUserId();
             var updateModel = profileRequest.ToUserUpdateModel();
             await _userService.UpdateUser(userId, updateModel);
             return Ok();

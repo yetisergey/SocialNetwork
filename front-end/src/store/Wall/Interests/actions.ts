@@ -9,7 +9,7 @@ import {
 
 import { action } from 'typesafe-actions';
 import { Dispatch } from 'redux';
-import { loadInterests, addInterest } from '../../../api/interest/interest-api';
+import { loadInterests, addInterest } from '../../../api/network/interest/interest-api';
 import { REQUEST } from '../types';
 
 export const loadInterestsAction = () => {

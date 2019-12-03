@@ -12,7 +12,7 @@ export default () => {
             <Switch>
                 <Route exact path="/enter" component={Enter} />
                 <AuthorizedRoute exact path="/" component={Wall} />
-                <AuthorizedRoute path="/messages" component={Messages} />
+                <AuthorizedRoute path="/messages/:id" component={Messages} />
                 <AuthorizedRoute path="/friends" component={Friends} />
                 <AuthorizedRoute path="/people" component={Friends} />
             </Switch>

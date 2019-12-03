@@ -47,7 +47,7 @@ class Login extends React.Component<ILoginProps, ILoginState> {
     render() {
         return (
             <Wrapper>
-                <LoginInput onChange={this.handleChangeLogin.bind(this)} ></LoginInput>
+                <LoginInput name="email" onChange={this.handleChangeLogin.bind(this)} ></LoginInput>
                 <Password type="password" onChange={this.handleChangePassword.bind(this)} ></Password>
                 <LoginFormButtons>
                     <ButtonSquare color="#ea185f" hoverColor="#c71752" onClick={() => this.tryLogin()}>LOGIN</ButtonSquare>

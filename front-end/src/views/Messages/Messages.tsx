@@ -15,9 +15,14 @@ import { bindActionCreators, Dispatch } from "redux";
 import { loadMessagesAction, addMessageAction } from "../../store/Messages/actions";
 import { connect } from "react-redux";
 import { ButtonSquare } from "../../components/Button";
+import { RouteComponentProps } from "react-router-dom";
+
+
+type TParams = { id: string };
 
 type IMessagesProps = ReturnType<typeof mapStateToProps> &
-    ReturnType<typeof mapDispatchToProps> & {};
+    ReturnType<typeof mapDispatchToProps> &
+    RouteComponentProps<TParams> & {};
 
 interface IMessagesState {
     messageText: string;
@@ -39,8 +44,12 @@ class Messages extends React.Component<IMessagesProps, IMessagesState>   {
     }
 
     componentDidMount() {
-        this.props.loadMessages();
-        this.scrollToBottom();
+        const { loadMessages, match } = this.props;
+        const { id } = match.params;
+        if (id) {
+            loadMessages(+id);
+            this.scrollToBottom();
+        }
     }
 
     handleChangeMessage(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -49,13 +58,18 @@ class Messages extends React.Component<IMessagesProps, IMessagesState>   {
 
     sendMessage() {
         const { messageText } = this.state;
-        const { addMessage } = this.props;
-        addMessage(messageText);
-        this.scrollToBottom();
+        const { addMessage, match } = this.props;
+        const { id } = match.params;
+        if (id) {
+            addMessage(+id, messageText);
+            this.setState({ messageText: "" });
+            this.scrollToBottom();
+        }
     }
 
     render() {
         const { arrayOfMessages } = this.props;
+        const { messageText } = this.state;
         return (
             <MessagesModule>
                 <MessagesWrapp>
@@ -70,7 +84,7 @@ class Messages extends React.Component<IMessagesProps, IMessagesState>   {
                         </MessagesPanel>
                     </MessagesPanelRelative>
                     <InputPanel>
-                        <TextArea onChange={this.handleChangeMessage.bind(this)} />
+                        <TextArea onChange={this.handleChangeMessage.bind(this)} value={messageText}/>
                         <ButtonSquare onClick={this.sendMessage.bind(this)}>Отправить</ButtonSquare>
                     </InputPanel>
                 </MessagesWrapp>
