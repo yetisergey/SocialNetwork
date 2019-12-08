@@ -1,7 +1,6 @@
 ﻿namespace Web
 {
-    using Authorization.Attributes;
-    using Authorization.Service;
+    using Authorization;
     using Domain;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
@@ -61,7 +60,6 @@
                 options.InstanceName = "master";
             });
 
-            services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IFriendService, FriendService>();
             services.AddTransient<IInterestsService, InterestsService>();

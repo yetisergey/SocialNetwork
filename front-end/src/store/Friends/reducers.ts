@@ -1,4 +1,4 @@
-import { FriendsActionTypes, REQUEST, LOAD_FRIENDS_SUCCESS } from "./types"
+import { FriendsActionTypes, REQUEST, LOAD_FRIENDS_SUCCESS, ADD_FRIEND_SUCCESS } from "./types"
 import { IFriendsStore } from "../../models/friends/types";
 
 export const initialStateFriends: IFriendsStore = {
@@ -17,6 +17,10 @@ export function friendsReducer(state = initialStateFriends, action: FriendsActio
             return {
                 ...state,
                 arrayOfFriends: action.payload
+            };
+        case ADD_FRIEND_SUCCESS:
+            return {
+                ...state
             };
         default:
             return state;

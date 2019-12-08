@@ -10,7 +10,6 @@ namespace Domain
 
     public interface ISocialNetworkContext
     {
-        DbSet<Friend> Friends { get; set; }
         DbSet<Interest> Interests { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Wall> Walls { get; set; }
@@ -20,7 +19,6 @@ namespace Domain
 
     public class SocialNetworkContext : DbContext, ISocialNetworkContext
     {
-        public DbSet<Friend> Friends { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Wall> Walls { get; set; }
@@ -37,18 +35,8 @@ namespace Domain
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Friend>()
-                .HasKey(bc => new { bc.UserId, bc.UserFriendId });
-
-            modelBuilder.Entity<Friend>()
-                .HasOne(bc => bc.User)
-                .WithMany(b => b.Friends)
-                .HasForeignKey(bc => bc.UserId);
-
-            modelBuilder.Entity<Friend>()
-                .HasOne(bc => bc.UserFriend)
-                .WithMany(c => c.UserFriends)
-                .HasForeignKey(bc => bc.UserFriendId);
+            modelBuilder.Entity<User>()
+                .HasMany(bc => bc.Friends);
 
             modelBuilder.Entity<User>()
                 .HasData(new User()
@@ -66,12 +54,6 @@ namespace Domain
                     Password = "81d0869f-4c88-657d-9a2f-eaa0c55ad015",//test
                     Email = "test@mail.com"
                 });
-
-            modelBuilder.Entity<Friend>().HasData(new Friend()
-            {
-                UserId = 1,
-                UserFriendId = 2
-            });
         }
     }
 }

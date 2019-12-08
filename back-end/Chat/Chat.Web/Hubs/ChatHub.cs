@@ -1,6 +1,6 @@
 ﻿namespace Chat.Web.Hubs
 {
-    using Authorization.Attributes;
+    using Authorization;
     using Chat.Services;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Authorization;
@@ -29,8 +29,7 @@
         {
             var currentUserId = Context.User.GetUserId();
             var msg = await _chatService.AddMessage(currentUserId, userTo, message);
-            await Clients.User(currentUserId.ToString()).SendAsync("Receive", msg);
-            await Clients.User(userTo.ToString()).SendAsync("Receive", msg);
+            await Clients.Users(currentUserId.ToString(), userTo.ToString()).SendAsync("Receive", msg);
         }
     }
 

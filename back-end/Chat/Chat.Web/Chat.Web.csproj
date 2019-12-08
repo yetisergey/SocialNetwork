@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Authorization\Authorization.Attributes\Authorization.Attributes.csproj" />
+    <ProjectReference Include="..\..\Authorization\Authorization.csproj" />
     <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
     <ProjectReference Include="..\Chat.Services\Chat.Services.csproj" />
   </ItemGroup>

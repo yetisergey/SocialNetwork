@@ -15,10 +15,8 @@ namespace Domain.Models
 
         public bool IsDeleted { get; set; }
 
-        public virtual ICollection<Friend> Friends { get; set; }
+        public virtual ICollection<User> Friends { get; set; } = new List<User>();
 
-        public virtual ICollection<Friend> UserFriends { get; set; }
-
-        public virtual ICollection<Interest> Interests { get; set; }
+        public virtual ICollection<Interest> Interests { get; set; } = new List<Interest>();
     }
 }

@@ -37,16 +37,27 @@
 
         public async Task<List<UserModel>> GetUserFriendsAsync(int userId)
         {
-            var dbUsers = await _socialNetworkContext.Friends
-                .Include(u => u.UserFriend)
-                .Where(u => u.UserId == userId).ToListAsync();
+            var userFrindsModels = (await _socialNetworkContext.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == userId))
+                .Friends;
 
-            return dbUsers.Select(dbUser => dbUser.UserFriend.MapToUserModel()).ToList();
+            return userFrindsModels.Select(u => u.MapToUserModel()).ToList();
         }
 
-        public Task AddUserToFriendsAsync(int userId, int friendId)
+        public async Task AddUserToFriendsAsync(int userId, int friendId)
         {
-            throw new NotImplementedException();
+            var user = await _socialNetworkContext.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            var friend = await _socialNetworkContext.Users
+                .Include(u => u.Friends)
+                .FirstOrDefaultAsync(u => u.Id == friendId);
+
+            user.Friends.Add(friend);
+
+            await _socialNetworkContext.SaveChangesAsync();
         }
     }
 }

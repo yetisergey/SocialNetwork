@@ -1,7 +1,6 @@
 ﻿namespace Chat.Web
 {
-    using Authorization.Attributes;
-    using Authorization.Service;
+    using Authorization;
     using Chat.Domain;
     using Chat.Services;
     using Chat.Web.Hubs;
@@ -75,7 +74,6 @@
                 options.InstanceName = "master";
             });
 
-            services.AddSingleton<IAuthorizationRedisService, AuthorizationRedisService>();
             services.AddTransient<IChatService, ChatService>();
             services.AddTransient<IChatContext, ChatContext>();
 

@@ -1,6 +1,6 @@
 ﻿namespace Web.Controllers
 {
-    using Authorization.Attributes;
+    using Authorization;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;

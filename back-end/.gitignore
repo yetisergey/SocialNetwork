@@ -1,0 +1,16 @@
+/bin
+/obj
+/Web/bin
+/Web/obj
+/Chat/Chat.Web/bin
+/Chat/Chat.Web/obj
+/Chat/Chat.Services/bin
+/Chat/Chat.Services/obj
+/Chat/Chat.Domain/bin
+/Chat/Chat.Domain/obj
+/Authorization/bin
+/Authorization/obj
+/Domain/bin
+/Domain/obj
+/Services/bin
+/Services/obj
